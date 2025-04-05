@@ -22,26 +22,27 @@ export const authOptions: NextAuthOptions = {
         },
         async authorize(credentials, req) {
             
-            if(!credentials) return null;
+            if(!credentials) throw new Error("No credentails Provided");
 
 
-            const { success } = credentialsType.safeParse(credentials);
-            if (!success) return null;
+            const { isSignUp, email, password, name } = credentials;
 
 
-            let user = await prisma.user.findUnique({
-            where: {
-                email: credentials?.email,
-            },
-            });
+            if(isSignUp === 'true') {
+                const { success } = credentialsType.safeParse(credentials);
+                if (!success) throw new Error("Invalid credentials");
+            } 
 
-            if (!user && credentials.name && credentials.isSignUp === "true") {
-                const hashedPassword = await bcrypt.hash(credentials.password, 10);
+
+            let user = await prisma.user.findUnique({ where: { email } });
+
+            if (!user && name && isSignUp === "true") {
+                const hashedPassword = await bcrypt.hash(password, 10);
                 user = await prisma.user.create({
                     data: {
-                    email: credentials.email,
+                    email,
                     password: hashedPassword,
-                    name: credentials.name,
+                    name,
                     provider: "CREDENTIALS",
                     createdAt: new Date(),
                     },
@@ -55,8 +56,8 @@ export const authOptions: NextAuthOptions = {
             }
 
             if(user && user.password) {
-                const isValidPassword = await bcrypt.compare(credentials.password, user.password);
-                if(!isValidPassword) return null
+                const isValidPassword = await bcrypt.compare(password, user.password);
+                if(!isValidPassword) throw new Error("Invalid Password")
 
                 return {
                     id: user.id,
@@ -88,11 +89,11 @@ export const authOptions: NextAuthOptions = {
                         createdAt: new Date()
                     }
                 })
-                return true
             }
+            return true
 
-            return true;
         }
+        return true;
     },
     async jwt({token, user}: any) {
         if(user) {

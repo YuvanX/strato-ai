@@ -9,12 +9,15 @@ import { Card } from "./card";
 import { Input } from "./input";
 import { Button } from "./button";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter()  
+  
 
   return (
     
@@ -76,10 +79,13 @@ export default function Auth() {
               />
               <Button
                 classname="mt-3 flex justify-center gap-2 items-center font-medium hover:bg-white"
-                onClick={async () => await signIn("credentials", {
+                onClick={async () => { await signIn("credentials", {
                   email: email,
-                  password: password
-                })}
+                  password: password,
+                  redirect: false
+                })
+                router.push('/dashboard')
+              }}
               >
                 <div>Login with Email</div>
                 <MdOutlineEmail size={18} />
@@ -112,13 +118,15 @@ export default function Auth() {
                   />
                   <Button
                     classname="mt-3 flex justify-center gap-2 items-center font-medium hover:bg-white"
-                    onClick={async () => await signIn("credentials", {
+                    onClick={async () => { await signIn("credentials", {
                       email,
                       password,
                       name,
                       isSignUp: true,
                       redirect: false
-                    })}
+                    }) 
+                    router.push('/dashboard')
+                  } }
                   >
                     <div>Create an account</div>
                     <LuArrowRight size={18}/>
@@ -134,7 +142,7 @@ export default function Auth() {
           <Button
             classname="flex gap-2 justify-center items-center text-white !bg-[#121212]  border border-[#1E293B] "
             onClick={async () => {
-              await signIn("google")
+              await signIn("google" ,{ callbackUrl: '/dashboard' })
             }}
           >
             <FcGoogle size={18} />
