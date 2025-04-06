@@ -1,7 +1,8 @@
+import { Generate  } from "@/components/generate";
 
 
 export default function() {
-    return <div>
-       
+    return <div className="h-screen  w-full">
+       <Generate/>
     </div>
 }
