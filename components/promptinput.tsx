@@ -61,17 +61,17 @@ export const PromptInput = () => {
   }, [placeHolder, placeHolderIndex, deleting]);
 
   return (
-    <div className="border border-slate-500 bg-[#27272a] p-4 rounded-xl">
+    <div className="border shadow-sm  dark:border-slate-600 bg-white text-black dark:bg-[#27272a] dark:text-white p-4 rounded-xl">
       <textarea
         ref={textAreaRef}
         value={prompt}
         placeholder={placeHolder}
-        className="w-full outline-none resize-none text-white"
+        className="w-full outline-none resize-none "
         onChange={handleChange}
         rows={5}
       />
       <div className="flex justify-end">
-            <Button classname="text-black flex items-center justify-center bg-slate-50 !w-10" onClick={() => ""}>
+            <Button classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10" onClick={() => ""}>
                 <RiArrowRightLine/>
             </Button>
       </div>

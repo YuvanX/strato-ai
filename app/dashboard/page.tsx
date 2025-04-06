@@ -1,6 +1,5 @@
 import { AppBar } from "@/components/appbar";
 import { DashBoard } from "@/components/dashboard";
-import { SideBar } from "@/components/sidebar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -11,9 +10,10 @@ export default async function() {
         redirect("/auth")
     }
 
-    return <div className="flex">
-        <SideBar username={session.user.name || "User"} email={session.user.email || "user@example.com"}/>
-        <div className="w-full mx-30">
+    return <div >
+        {/* <SideBar username={session.user.name || "User"} email={session.user.email || "user@example.com"}/> */}
+        <AppBar/>
+        <div className="w-full px-10">
 
             <DashBoard/>
         </div>

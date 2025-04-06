@@ -2,7 +2,7 @@ import { Generate  } from "@/components/generate";
 
 
 export default function() {
-    return <div className="h-screen  w-full">
+    return <div className="w-full">
        <Generate/>
     </div>
 }
