@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { RiArrowRightLine } from "react-icons/ri";
+import axios from "axios"
 
 export const PromptInput = () => {
   const [prompt, setPrompt] = useState("");
@@ -48,7 +49,7 @@ export const PromptInput = () => {
       );
 
       if (!deleting && placeHolder === currentPhrase) {
-        setTimeout(() => setDeleting(true), 1500); // pause before delete
+        setTimeout(() => setDeleting(true), 1500); 
       }
 
       if (deleting && placeHolder === "") {
@@ -71,7 +72,11 @@ export const PromptInput = () => {
         rows={5}
       />
       <div className="flex justify-end">
-            <Button classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10" onClick={() => ""}>
+            <Button classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10" onClick={async () => {
+              const res = await axios.post(`/api/generate`, {
+                prompt: prompt
+              })
+            }}>
                 <RiArrowRightLine/>
             </Button>
       </div>

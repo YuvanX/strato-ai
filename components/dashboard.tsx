@@ -3,6 +3,7 @@ import { IoAdd } from "react-icons/io5"
 import { Button } from "./button"
 import { RecentPage } from "./recentpage"
 import { Stats } from "./stats"
+import { redirect } from "next/navigation"
 
 export const DashBoard = () => {
     return <div className="my-5">
@@ -13,7 +14,7 @@ export const DashBoard = () => {
             <Stats title="TOTAL PAGES" stats="4"/>
             <Stats title="TOTAL PAGES" stats="4"/>
         </div>
-        <Button classname="!w-60 flex items-center gap-2  text-white bg-black border border-slate-700 hover:bg-white hover:text-black" onClick={() => ""}>
+        <Button classname="!w-60 flex items-center gap-2  text-white bg-black border border-slate-700 hover:bg-white hover:text-black" onClick={() => redirect('/generate')}>
             <IoAdd size={18} />
             <div>Create new Landing Page</div>
         </Button> {/*here*/}

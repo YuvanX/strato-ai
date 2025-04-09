@@ -99,12 +99,13 @@ export const authOptions: NextAuthOptions = {
         if(user) {
             token.id = user.id
         }
-
         return token
     },
 
     async session({session, token, user}: any) {
-        session.user.id = token.id
+        if(session.user && session.token) {
+            session.user.id = token.id
+        }
         return session
     },
     async redirect({url, baseUrl}: any) {

@@ -11,10 +11,7 @@ export default async function() {
     }
 
     return <div >
-        {/* <SideBar username={session.user.name || "User"} email={session.user.email || "user@example.com"}/> */}
-        <AppBar/>
-        <div className="w-full px-10">
-
+        <div className="w-full px-20">
             <DashBoard/>
         </div>
     </div>

@@ -6,4 +6,5 @@ export const credentialsType = z.object({
     name: z.string().min(5)
 })
 
+export type CredentialsType = z.infer<typeof credentialsType>
 
