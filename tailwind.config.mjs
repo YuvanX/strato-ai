@@ -6,7 +6,8 @@ export default {
     theme: {
       extend: {
         fontFamily: {
-          sans: ['"Plus Jakarta Sans"', 'sans-serif'], // 👈 this sets default
+          anton: ['Anton', 'sans-serif'],
+          sans: ['Plus Jakarta Sans', 'sans-serif'],
         },
       },
     },
