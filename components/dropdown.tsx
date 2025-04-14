@@ -2,12 +2,13 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { useState } from "react";
+import { redirect } from "next/navigation";
+
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export const DropDown = ({user}: any) => {
@@ -22,10 +23,10 @@ export const DropDown = ({user}: any) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-52">
           <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>DashBoard</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => redirect('/dashboard')}>DashBoard</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator/>
-          <DropdownMenuItem>Sign out</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

@@ -10,7 +10,7 @@ export const RecentPage = ({
   date: string;
 }) => {
   return (
-    <div className="max-w-sm bg-black text-white rounded-t-xl rounded-b-xl overflow-hidden shadow-lg border border-slate-800">
+    <div className="max-w-sm mx-4 my-2 bg-white text-black dark:bg-black dark:text-white rounded-t-xl rounded-b-xl overflow-hidden shadow-lg border ">
         <div className="relative">
             <div>
             <img
