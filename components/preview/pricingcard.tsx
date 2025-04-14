@@ -2,7 +2,7 @@ import { MdDone } from "react-icons/md"
 import { Card } from "../card"
 
 export const PricingCard = ({ title, amount, features, bestfor }: { title: string, amount: string, features: string[], bestfor: string }) => {
-    return <Card classname="!bg-background text-white flex flex-col rounded-xl border min-w-96 font-sans">
+    return <Card classname="!bg-background text-white flex flex-col rounded-xl border min-w-sm font-sans ">
         <div className="text-center font-medium">
             {title.toUpperCase()}
         </div>
