@@ -22,6 +22,7 @@ export const DropDown = ({user}: any) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-52">
           <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>DashBoard</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator/>
           <DropdownMenuItem>Sign out</DropdownMenuItem>

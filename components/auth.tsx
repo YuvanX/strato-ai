@@ -3,13 +3,13 @@
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineEmail } from "react-icons/md";
 import { LuArrowRight } from "react-icons/lu";
-import * as m from "motion/react-client";
 import { useState } from "react";
 import { Card } from "./card";
 import { Input } from "./input";
 import { Button } from "./button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import * as m from "motion/react-client";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -72,19 +72,19 @@ export default function Auth() {
 
               <Input
                 label="Password"
-                placeholder="hi@2020"
+                placeholder="password"
                 type="password"
                 onChange={setPassword}
                 id="password"
               />
               <Button
-                classname="mt-3 flex justify-center gap-2 items-center font-medium hover:bg-white"
+                classname="mt-3 flex justify-center gap-2 items-center font-medium bg-white hover:bg-slate-200"
                 onClick={async () => { await signIn("credentials", {
                   email: email,
                   password: password,
                   redirect: false
                 })
-                router.push('/dashboard')
+                router.push('/generate')
               }}
               >
                 <div>Login with Email</div>
@@ -111,13 +111,13 @@ export default function Auth() {
 
                   <Input
                     label="Password"
-                    placeholder="hi@2020"
+                    placeholder="password"
                     type="password"
                     onChange={setPassword}
                     id="password"
                   />
                   <Button
-                    classname="mt-3 flex justify-center gap-2 items-center font-medium hover:bg-white"
+                    classname="mt-3 flex justify-center gap-2 items-center font-medium bg-white hover:bg-slate-200"
                     onClick={async () => { await signIn("credentials", {
                       email,
                       password,
@@ -125,7 +125,7 @@ export default function Auth() {
                       isSignUp: true,
                       redirect: false
                     }) 
-                    router.push('/dashboard')
+                    router.push('/generate')
                   } }
                   >
                     <div>Create an account</div>
@@ -140,9 +140,9 @@ export default function Auth() {
           </div>
 
           <Button
-            classname="flex gap-2 justify-center items-center text-white !bg-[#121212]  border border-[#1E293B] "
+            classname="flex gap-2 justify-center items-center text-white bg-[#121212] hover:bg-[#1E293B]  border border-[#1E293B] "
             onClick={async () => {
-              await signIn("google" ,{ callbackUrl: '/dashboard' })
+              await signIn("google" ,{ callbackUrl: '/generate' })
             }}
           >
             <FcGoogle size={18} />
