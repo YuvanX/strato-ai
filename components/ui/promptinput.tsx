@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { RiArrowRightLine } from "react-icons/ri";
 import axios from "axios"
+import { redirect } from "next/navigation";
+
 
 export const PromptInput = () => {
   const [prompt, setPrompt] = useState("");
@@ -74,8 +76,11 @@ export const PromptInput = () => {
       <div className="flex justify-end">
             <Button classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10" onClick={async () => {
               const res = await axios.post(`/api/generate`, {
-                prompt: prompt
+                prompt: prompt,
+                redirect: false
               })
+              console.log(res.data.pageId)
+              redirect(`/preview/${res.data.pageId}`)
             }}>
                 <RiArrowRightLine/>
             </Button>

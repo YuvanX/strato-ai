@@ -8,7 +8,7 @@ export const PricingCard = ({ title, amount, features, bestfor }: { title: strin
         </div>
         <div className="text-center my-5">
             <div className="flex gap-1 items-center justify-center">
-                <div className="text-5xl font-semibold">${amount}</div>
+                <div className="text-5xl font-semibold">{amount}</div>
                 <div>/month</div>
             </div>
             <div className="text-xs">billed monthly</div>

@@ -1,7 +1,7 @@
-import { title } from "process";
+
 import { PricingCard } from "./pricingcard";
 
-export const Pricing = () => {
+export const Pricing = ({ pricingSection }: { pricingSection: [{ plan: string, price: string, bestFor: string, features: string[]}]}) => {
     const features = [
         "1 User",
         "5GB Storage",
@@ -36,7 +36,7 @@ export const Pricing = () => {
           Choose the plan that's right for you
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
-           {pricingPlans.map((plan) => <PricingCard bestfor={plan.bestfor} title={plan.title} amount={plan.amount} features={plan.features} key={plan.id}/>)}
+           {pricingSection.map((plan) => <PricingCard bestfor={plan.bestFor} title={plan.plan} amount={plan.price} features={plan.features} key={plan.plan}/>)}
         </div>
       </div>
     </div>
