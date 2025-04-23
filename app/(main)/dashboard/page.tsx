@@ -1,4 +1,4 @@
-import { DashBoard } from "@/components/dashboard";
+import { DashBoard } from "@/components/ui/dashboard";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 

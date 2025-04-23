@@ -10,7 +10,7 @@ export const LandingPage = () => {
         <LandingPageBar />
         <HeroSection/>
         <div className="min-h-screen">
-            <ImageLayout image="/dashboard1.png" alt="landing"/>
+            <ImageLayout image="/generate.png" alt="landing"/>
         </div>
         <Features/>
         <PerkSection/>

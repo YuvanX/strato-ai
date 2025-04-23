@@ -1,6 +1,5 @@
 import { LuQuote } from "react-icons/lu";
-import { Avatar } from "../avatar";
-import { Card } from "../card";
+import { Card } from "@/components/ui/card"; 
 
 export const TestimonialCard = ({
   name,

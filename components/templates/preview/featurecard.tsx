@@ -1,5 +1,5 @@
-import { RiThunderstormsLine } from "react-icons/ri";
-import { Card } from "../card";
+
+import { Card } from "@/components/ui/card"; 
 import { FaCode } from "react-icons/fa6";
 
 

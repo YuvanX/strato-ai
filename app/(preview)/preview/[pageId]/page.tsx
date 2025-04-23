@@ -1,9 +1,9 @@
-import { FeatureCard } from "@/components/preview/featurecard";
-import { Footer } from "@/components/preview/footer";
-import { HeroSection } from "@/components/preview/herosection";
-import { NavBar } from "@/components/preview/navbar";
-import { Pricing } from "@/components/preview/pricing";
-import { Testimonial } from "@/components/preview/testimonial";
+import { FeatureCard } from "@/components/templates/preview/featurecard";
+import { Footer } from "@/components/templates/preview/footer";
+import { HeroSection } from "@/components/templates/preview/herosection";
+import { NavBar } from "@/components/templates/preview/navbar";
+import { Pricing } from "@/components/templates/preview/pricing";
+import { Testimonial } from "@/components/templates/preview/testimonial";
 import * as m from "motion/react-client";
 export default function () {
   const FEATURES = [

@@ -1,4 +1,4 @@
-import { Generate  } from "@/components/generate";
+import { Generate } from "@/components/ui/generate";
 
 
 export default function() {

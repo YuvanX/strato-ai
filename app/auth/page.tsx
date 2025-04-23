@@ -1,4 +1,4 @@
-import Auth from "@/components/auth";
+import Auth from "@/components/ui/auth";
 
 export default function() {
     return <Auth/>

@@ -1,5 +1,4 @@
-import { HeroSection } from "@/components/templates/herosection";
-import { LandingPage } from "@/components/templates/landingpage";
+import { LandingPage } from "@/components/templates/template1/landingpage";
 
 export default async function () {
   return <div>
