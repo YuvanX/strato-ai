@@ -5,6 +5,7 @@ import { DropDown } from "./dropdown";
 import { RiTwitterXLine } from "react-icons/ri";
 import { ModeToogle } from "./modetoggle";
 import { useEffect, useState } from "react";
+import { Webhook } from "lucide-react";
 
 export const AppBar = () => {
   const session = useSession();
@@ -26,7 +27,10 @@ export const AppBar = () => {
           : "bg-transparent border-transparent"
       } transition-all duration-300`}
     >
-      <div className="text-2xl font-semibold font-sans">Strato</div>
+      <div className="text-2xl font-semibold flex gap-4 items-center font-sans">
+        <Webhook/>
+        <div>Strato</div>
+      </div>
       <div className="flex gap-5 items-center font-sans">
         <div>
           <RiTwitterXLine size={20} />
