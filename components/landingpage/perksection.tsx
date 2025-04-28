@@ -1,4 +1,4 @@
-import { TextReveal } from "../../magicui/text-reveal";
+import { TextReveal } from "../magicui/text-reveal";
 
 export const PerkSection = () => {
   return (

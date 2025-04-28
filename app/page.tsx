@@ -1,4 +1,4 @@
-import { LandingPage } from "@/components/templates/template1/landingpage";
+import { LandingPage } from "@/components/landingpage/landingpage";
 
 export default async function () {
   return <div>
