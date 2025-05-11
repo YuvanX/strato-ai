@@ -1,48 +1,56 @@
-
-import { openai } from "@/app/lib/openai";
-import prisma from "@/db/src/db";
+import { anthropic } from "@/app/lib/llm/anthropic";
+import { findStack } from "@/app/lib/llm/findstack";
+import getServerSideSession from "@/app/lib/serversession";
+import {
+  finalPrompt,
+  nextjsPrompt,
+  reactSetUpPrompt,
+  uiSetUpPrompt,
+} from "@/app/lib/stackprompts/prompts";
 import { promptType } from "@/types/prompttype";
-import { getToken } from "next-auth/jwt";
-
 import { NextRequest, NextResponse } from "next/server";
 
-
 export const POST = async (req: NextRequest) => {
-    const token = await getToken({ req })
-    if(!token) return NextResponse.json({ success: false, message: "Unauthorized"}, {status: 401})
+  const session = await getServerSideSession();
+  if (!session)
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 400 }
+    );
 
-    try {
-        const body = await req.json()
-        const { prompt } = body
+  const { prompt } = await req.json();
 
-        const { success } = promptType.safeParse({prompt})
-        if(!success) return NextResponse.json({ message: "Invalid Inputs", success: false}, { status: 400 })
-        
-        const response = await openai.beta.chat.completions.parse({
-            model: "gpt-3.5-turbo",
-            messages:[
-                {"role": "system", "content": "You are a website landing page generator. Respond with JSON only."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature: 0.7
-        })
-        const content = response.choices[0].message.content
-        const page = await prisma.page.create({
-            data: {
-                prompt,
-                content: JSON.stringify(content),
-                createdAt: new Date(),
-                userId: Number(token.sub)
-            }
-        })
+  const { success } = promptType.safeParse(prompt);
+  if (!success)
+    return NextResponse.json(
+      { success: false, message: "Invalid Prompt" },
+      { status: 403 }
+    );
 
-        return NextResponse.json({
-            pageId: page.id
-        }, { status: 200 })
+  const stack = await findStack(prompt);
 
-    } catch(err) {
-        console.error(err)
-        return NextResponse.json({success: false, error: "Internal server error"}, {status: 500})
-    }
-
-}
+  const message = anthropic.messages.stream({
+    model: "claude-3-7-sonnet-20250219",
+    max_tokens: 8000,
+    messages: [{
+        role: "user",
+        content: `${stack === "react" ? reactSetUpPrompt : nextjsPrompt}`,
+      },
+      {
+        role: "user",
+        content: uiSetUpPrompt,
+      },
+      {
+        role: "user",
+        content: `${prompt} ${finalPrompt}`,
+      },
+    ],
+  });
+  console.log(message);
+  return NextResponse.json({
+      success: true,
+      message,
+    },
+    { status: 200 }
+  );
+};
