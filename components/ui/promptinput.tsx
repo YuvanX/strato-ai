@@ -2,28 +2,69 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { RiArrowRightLine } from "react-icons/ri";
-import axios from "axios"
+import clsx from "clsx";
+import axios from "axios";
+import { redirect, usePathname } from "next/navigation";
+import { useUIStore } from "@/store/uistore";
+import { parser } from "@/app/utils/parser";
 
-export const PromptInput = () => {
-  const [prompt, setPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
+
+
+export const PromptInput = ({
+  classname,
+  rows,
+  placeHolderPhrases,
+}: {
+  classname?: string;
+  rows: number;
+  placeHolderPhrases: string[];
+}) => {
+  
+  const [input, setInput] = useState("");
   const [placeHolder, setPlaceHolder] = useState("");
   const [placeHolderIndex, setPlaceHolderIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
-  const placeHolderPhrases = [
-    "Write a landing page for an AI tool...",
-    "Describe a product that helps with productivity...",
-    "Generate copy for a SaaS website...",
-    "Create a pitch for a startup idea...",
-  ];
+  const pathName = usePathname()
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setPrompt(e.target.value);
+    setInput(e.target.value);
     autoScale();
   };
 
+  async function init() {
+
+    const response = await axios.post('/api/template', {
+      prompt: input,
+      redirect: false
+    })
+    
+    const { prompts, uiPrompt } = response.data
+    
+    useUIStore.getState().setUIPrompt(uiPrompt[0])
+    
+    await axios.post('/api/generate', {
+      prompt: prompts,
+      redirect: false
+    })
+
+    redirect('/chat/1')
+  }
+
+  async function chat() {
+    const response = await axios.post('/api/generate', {
+      prompt: input
+    })
+  }
+  
+  const handleRequest = () => {
+    if(pathName === "/generate") {
+      init()
+    } else if(pathName === "/chat") {
+      chat()
+    }
+  }
+  
   const autoScale = () => {
     const textarea = textAreaRef.current;
     if (textarea) {
@@ -49,7 +90,7 @@ export const PromptInput = () => {
       );
 
       if (!deleting && placeHolder === currentPhrase) {
-        setTimeout(() => setDeleting(true), 1500); 
+        setTimeout(() => setDeleting(true), 1500);
       }
 
       if (deleting && placeHolder === "") {
@@ -62,23 +103,27 @@ export const PromptInput = () => {
   }, [placeHolder, placeHolderIndex, deleting]);
 
   return (
-    <div className="border shadow-sm  dark:border-slate-600 bg-white text-black dark:bg-[#27272a] dark:text-white p-4 rounded-xl">
+    <div
+      className={clsx(
+        "border shadow-sm  dark:border-slate-600 bg-white text-black dark:bg-[#27272a] dark:text-white p-4 rounded-xl",
+        classname
+      )}
+    >
       <textarea
         ref={textAreaRef}
-        value={prompt}
+        value={input}
         placeholder={placeHolder}
         className="w-full outline-none resize-none "
         onChange={handleChange}
-        rows={5}
+        rows={rows}
       />
       <div className="flex justify-end">
-            <Button classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10" onClick={async () => {
-              const res = await axios.post(`/api/generate`, {
-                prompt: prompt
-              })
-            }}>
-                <RiArrowRightLine/>
-            </Button>
+        <Button
+          classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10"
+          onClick={handleRequest}
+        >
+          <RiArrowRightLine />
+        </Button>
       </div>
     </div>
   );
