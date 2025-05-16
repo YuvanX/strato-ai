@@ -2,11 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { RiArrowRightLine } from "react-icons/ri";
-import clsx from "clsx";
-import axios from "axios";
 import { redirect, usePathname } from "next/navigation";
 import { useUIStore } from "@/store/uistore";
 import { parser } from "@/app/utils/parser";
+import { Steps } from "@/types/steps";
+import { useStepStore } from "@/store/stepstore";
+import axios from "axios";
+import clsx from "clsx";
 
 
 
@@ -43,12 +45,15 @@ export const PromptInput = ({
     
     useUIStore.getState().setUIPrompt(uiPrompt[0])
     
-    await axios.post('/api/generate', {
+    const result: string = await axios.post('/api/generate', {
       prompt: prompts,
       redirect: false
     })
 
-    redirect('/chat/1')
+    const parsedSteps: Steps[] = parser(result);
+    parsedSteps.map((step => useStepStore().addStep(step)))
+
+    redirect('/chat')
   }
 
   async function chat() {

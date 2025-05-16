@@ -2,7 +2,7 @@ import { promptType } from "@/types/prompttype";
 import { NextRequest, NextResponse } from "next/server";
 import { getSystemPrompt } from "@/app/lib/llm/prompt";
 import { ai } from "@/app/lib/llm/gemini";
-import { createUserContent, PartListUnion } from "@google/genai";
+import { createUserContent, GenerateContentResponse, PartListUnion } from "@google/genai";
 import getServerSideSession from "@/app/lib/serversession";
 
 export const POST = async (req: NextRequest) => {
@@ -19,16 +19,17 @@ export const POST = async (req: NextRequest) => {
 
   const contents = prompt.map((p: PartListUnion) => createUserContent(p));
 
- const message = await ai.models.generateContent({
+ const result: GenerateContentResponse = await ai.models.generateContent({
   model: 'gemini-2.0-flash',
   contents,
   config: {
     systemInstruction: getSystemPrompt(),
     maxOutputTokens: 8000,
   }
- })
- console.log(message);
- 
-
-  return NextResponse.json({ success: true, message}, { status: 200 });
+ }) 
+  if(!result) return NextResponse.json({
+    sucess: false,
+    result: "No response from llm"
+  })
+  return NextResponse.json({ success: true, result: result.candidates[0].content.parts[0].text}, { status: 200 });
 };

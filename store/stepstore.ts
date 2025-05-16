@@ -1,4 +1,4 @@
-import { StepStore } from "@/types/steps";
+import { Steps, StepStore } from "@/types/steps";
 import { create } from "zustand";
 
 export const useStepStore = create<StepStore>((set) => ({
@@ -9,5 +9,6 @@ export const useStepStore = create<StepStore>((set) => ({
     updateStep: (id, updateField) => set((state) => ({
         steps: state.steps.map((step) => step.id === id ? {...step, ...updateField } : step)
     })),
-    reset: () => set({steps: []})
+    reset: () => set({steps: []}),
+    setState: (s: Steps[]) => set({steps: s})
 })) 
