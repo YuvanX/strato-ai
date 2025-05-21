@@ -9,7 +9,7 @@ import { Steps } from "@/types/steps";
 import { useStepStore } from "@/store/stepstore";
 import axios from "axios";
 import clsx from "clsx";
-
+import prisma from "@/db/src/db";
 
 
 export const PromptInput = ({
@@ -28,6 +28,8 @@ export const PromptInput = ({
   const [deleting, setDeleting] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const pathName = usePathname()
+
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
