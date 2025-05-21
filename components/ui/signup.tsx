@@ -38,7 +38,7 @@ export const Signup = () => {
   return (
     <Card className="w-lg font-sans">
       <CardHeader>
-        <CardTitle className="text-xl">Create a account</CardTitle>
+        <CardTitle className="text-xl">Create an account</CardTitle>
         <CardDescription>
           Enter your details to create an account
         </CardDescription>

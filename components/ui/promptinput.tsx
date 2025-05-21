@@ -126,7 +126,7 @@ export const PromptInput = ({
       />
       <div className="flex justify-end">
         <Button
-          classname="text-slate-500 dark:text-black flex items-center justify-center dark:bg-white bg-gray-200 !w-10"
+          className="bg-gray-200 text-slate-400"
           onClick={handleRequest}
         >
           <RiArrowRightLine />
