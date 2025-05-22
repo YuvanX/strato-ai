@@ -35,7 +35,7 @@ export const LandingPageBar = () => {
         } transition-all duration-300 z-50`}
       >
         <div className="font-semibold flex gap-2 items-center">
-          <WebhookIcon className="bg-transparent"/>
+          <WebhookIcon className="!bg-transparent"/>
           <div>Strato</div>
         </div>
         <div className="lg:hidden flex items-center">
@@ -59,13 +59,13 @@ export const LandingPageBar = () => {
             <ModeToogle />
           </div>
           <Button
-            classname="dark:text-white text-black"
+            className="dark:text-white text-black bg-transparent"
             onClick={() => redirect("/auth")}
           >
             Login
           </Button>
           <Button
-            classname="text-white bg-black rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
+            className="text-white bg-black rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
             onClick={() => redirect("/auth")}
           >
             Signup
@@ -75,13 +75,13 @@ export const LandingPageBar = () => {
       {open && (
         <div className="z-20 fixed top-25 h-screen bg-white dark:bg-black w-full lg:hidden">
           <Button
-            classname="dark:text-white text-black"
+            className="dark:text-white text-black"
             onClick={() => redirect("/auth")}
           >
             Login
           </Button>
           <Button
-            classname="text-white bg-black rounded-r-full  rounded-l-full  border border-slate-600 shadow-md"
+            className="text-white bg-black rounded-r-full  rounded-l-full  border border-slate-600 shadow-md"
             onClick={() => redirect("/auth")}
           >
             Signup

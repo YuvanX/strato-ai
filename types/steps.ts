@@ -8,7 +8,7 @@ export type Steps = {
 
 export type StepStore = {
     steps: Steps[],
-    addStep: (step: Steps) => void,
+    addStep: (step: Steps) => void;
     updateStep: (id: number, updateFeild: Partial<Steps>) => void,
     reset: () => void 
     setState: (s: Steps[]) => void

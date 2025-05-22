@@ -6,7 +6,7 @@ export function parser(prompt: string): Steps[] {
     
     try {
         // Extract the stratoArtifact content
-        const artifactMatch = prompt.match(/<stratoAritifact[^>]*>([\s\S]*?)<\/stratoAritifact>/);
+        const artifactMatch = prompt.match(/<stratoArtifact[^>]*>([\s\S]*?)<\/stratoArtifact>/);
         
         if (!artifactMatch) {
             console.error("No stratoArtifact found in the prompt");

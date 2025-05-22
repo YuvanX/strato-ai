@@ -18,7 +18,7 @@ export const HeroSection = () => {
 
       <m.div initial={{opacity: 0, y: 90}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeIn"}} className="flex gap-4 justify-center items-center">
         <Button
-          classname="!w-30 text-white bg-gray-900  rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
+          className="!w-30 text-white bg-gray-900  rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
           onClick={() => redirect("/auth")}
         >
           Get Started

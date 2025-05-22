@@ -2,22 +2,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { RiArrowRightLine } from "react-icons/ri";
-import { redirect, usePathname } from "next/navigation";
-import { useUIStore } from "@/store/uistore";
-import { parser } from "@/app/utils/parser";
-import { Steps } from "@/types/steps";
-import { useStepStore } from "@/store/stepstore";
+import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import clsx from "clsx";
-import prisma from "@/db/src/db";
+import { useStepStore } from "@/store/stepstore";
+import { Steps } from "@/types/steps";
 
 
 export const PromptInput = ({
-  classname,
+  className,
   rows,
   placeHolderPhrases,
 }: {
-  classname?: string;
+  className?: string;
   rows: number;
   placeHolderPhrases: string[];
 }) => {
@@ -28,8 +25,9 @@ export const PromptInput = ({
   const [deleting, setDeleting] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const pathName = usePathname()
-
-  
+  const router = useRouter()
+  const setSteps = useStepStore((state) => state.setState)
+  const addSteps = useStepStore((state) => state.addStep)
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -43,19 +41,17 @@ export const PromptInput = ({
       redirect: false
     })
     
-    const { prompts, uiPrompt } = response.data
-    
-    useUIStore.getState().setUIPrompt(uiPrompt[0])
-    
-    const result: string = await axios.post('/api/generate', {
+    const { prompts, steps, projectId } = response.data
+    setSteps(steps)
+
+    const result = await axios.post('/api/generate', {
       prompt: prompts,
+      projectId,
       redirect: false
     })
-
-    const parsedSteps: Steps[] = parser(result);
-    parsedSteps.map((step => useStepStore().addStep(step)))
-
-    redirect('/chat')
+    const { extraSteps } = result.data
+    extraSteps.forEach((s: Steps) => addSteps(s))
+    router.push(`/chat/${projectId}`)
   }
 
   async function chat() {
@@ -113,7 +109,7 @@ export const PromptInput = ({
     <div
       className={clsx(
         "border shadow-sm  dark:border-slate-600 bg-white text-black dark:bg-[#27272a] dark:text-white p-4 rounded-xl",
-        classname
+        className
       )}
     >
       <textarea
