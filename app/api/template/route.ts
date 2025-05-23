@@ -77,6 +77,7 @@ async function handleStackCreation(stackPrompt: string, session: any, prompt: st
         data: {
           projectId: project.id,
           steps: parsedSteps,
+          createdAt: new Date()
         },
       });
       await tx.prompt.create({

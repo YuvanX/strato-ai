@@ -87,6 +87,8 @@ model Steps {
   projectId     String    
   steps         Json[]
   project       Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime   @default(now())
 }
 
 model Chat {

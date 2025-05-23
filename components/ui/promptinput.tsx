@@ -5,8 +5,9 @@ import { RiArrowRightLine } from "react-icons/ri";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import clsx from "clsx";
-import { useStepStore } from "@/store/stepstore";
+import { useStepStore } from "@/store/useStepStore";
 import { Steps } from "@/types/steps";
+import { useLLMResponse } from "@/store/useLLMResponse";
 
 
 export const PromptInput = ({
@@ -27,7 +28,7 @@ export const PromptInput = ({
   const pathName = usePathname()
   const router = useRouter()
   const setSteps = useStepStore((state) => state.setState)
-  const addSteps = useStepStore((state) => state.addStep)
+  const setLLM = useLLMResponse((state) => state.setLLM)
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -49,8 +50,8 @@ export const PromptInput = ({
       projectId,
       redirect: false
     })
-    const { extraSteps } = result.data
-    extraSteps.forEach((s: Steps) => addSteps(s))
+    const { llmResponse } = result.data
+    setLLM(llmResponse)
     router.push(`/chat/${projectId}`)
   }
 

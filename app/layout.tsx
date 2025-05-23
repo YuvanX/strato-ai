@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/providers/provider";
+import { WebhookIcon } from "lucide-react";
 
 
 const geistSans = Geist({
@@ -15,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Strato.ai",
-  description: "Strato.ai",
+  title: "Strato",
+  description: "Strato",
 };
 
 export default function RootLayout({

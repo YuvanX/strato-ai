@@ -4,7 +4,6 @@ import axios from "axios";
 
 export const Generate = () => {
 
-  
   return (
     <div className="flex justify-center items-center h-screen font-sans mx-3">
       <div className="w-[700px]">

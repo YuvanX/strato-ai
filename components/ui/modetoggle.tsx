@@ -17,6 +17,6 @@ export const ModeToogle = () => {
         setTheme(theme === "light" ? "dark" : "light")
     }
     return <div>
-        <Button className="bg-transparent hover:bg-transparent" onClick={toggleTheme}>{theme === "light" ? <RiMoonLine size={20}/> : <RiSunFill color="white" size={20}/>}</Button>
+        <Button className="bg-transparent hover:bg-transparent shadow-none" onClick={toggleTheme}>{theme === "light" ? <RiMoonLine color="black" size={20}/> : <RiSunFill color="white" size={20}/>}</Button>
     </div>
 }

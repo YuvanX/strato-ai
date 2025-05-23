@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
   
   const contents = prompt.map((p: PartListUnion) => createUserContent(p));
 
-  const result: GenerateContentResponse = await ai.models.generateContent({
+  const llmResponse: GenerateContentResponse = await ai.models.generateContent({
     model: "gemini-2.0-flash",
     contents,
     config: {
@@ -31,22 +31,23 @@ export const POST = async (req: NextRequest) => {
     },
   });
 
-  if (!result) {
+  if (!llmResponse) {
     return NextResponse.json({
       sucess: false,
       result: "No response from llm",
     });
   
   } else {
-    const response = result.candidates[0].content.parts[0].text
-    const parsedSteps: Steps[] = parser(response!);
-    const steps = await prisma.steps.create({
+    
+    const parsedSteps: Steps[] = parser(llmResponse.candidates[0].content.parts[0].text!)
+    await prisma.steps.create({
       data: {
         projectId: projectId,
         steps: parsedSteps, 
+        createdAt: new Date()
       }
     })
 
-    return NextResponse.json({ success: true, message: "Generated the content", extraSteps: steps.steps},{ status: 200 });
+    return NextResponse.json({ success: true, message: "Generated the content", llmResponse },{ status: 200 });
   }
 };

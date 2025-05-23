@@ -1,10 +1,15 @@
+'use client'
 import { placeHolderPhrases } from "@/app/utils/constants";
 import { PromptInput } from "./promptinput"
 import { StratoMessageCard } from "./stratomsgcard";
 import { UserMessageCard } from "./usermsgcard";
 import { FileSteps } from "./steps";
+import { useLLMResponse } from "@/store/useLLMResponse";
+
 
 export const Chat = () => {
+  const llmResponse = useLLMResponse((state) => state.llm)
+     
     return <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
         <UserMessageCard message="Hi there"/>
