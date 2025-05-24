@@ -9,7 +9,7 @@ export default function() {
       <div className="col-span-4 h-full">
         <Chat />
       </div>
-      <div className="col-span-8 h-full">
+      <div className="col-span-8">
         <Preview />
       </div>
     </div>

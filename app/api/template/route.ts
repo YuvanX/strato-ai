@@ -8,7 +8,7 @@ import {
 } from "@/app/lib/stackprompts/prompts";
 import { parser } from "@/app/utils/parser";
 import prisma from "@/db/src/db";
-import { Steps } from "@/types/steps";
+import { Steps } from "@/types/stepsType";
 import { createUserContent } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
       prompts: [
         uiSetUpPrompt,
         `Here is an artifact that contains all the files of the project visible to you.\n Consider the content of ALL files in the project.\n\n${reactSetUpPrompt}\n\nHere is a list of files that exist on the file system but are not being shown to you:\n\n - .gitignore\n - package.lock-json\n`,
+        prompt
       ],
       projectId,
       steps: steps.steps

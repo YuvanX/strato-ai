@@ -1,7 +1,7 @@
 "use client";
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ModeToogle } from "@/components/ui/modetoggle";
+import { ModeToogle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
 import * as m from "motion/react-client";
 import { MenuIcon } from "@/components/ui/menu";

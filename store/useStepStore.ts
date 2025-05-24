@@ -1,4 +1,4 @@
-import { Steps, StepStore } from "@/types/steps";
+import { Steps, StepStore } from "@/types/stepsType";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

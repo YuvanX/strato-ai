@@ -8,7 +8,7 @@ import {
 } from "@google/genai";
 import getServerSideSession from "@/app/lib/serversession";
 import { parser } from "@/app/utils/parser";
-import { Steps } from "@/types/steps";
+import { Steps } from "@/types/stepsType";
 import prisma from "@/db/src/db";
 
 export const POST = async (req: NextRequest) => {
@@ -18,7 +18,6 @@ export const POST = async (req: NextRequest) => {
   }
 
   const { prompt, projectId } = await req.json();
-  console.log(projectId);
   
   const contents = prompt.map((p: PartListUnion) => createUserContent(p));
 
@@ -27,7 +26,7 @@ export const POST = async (req: NextRequest) => {
     contents,
     config: {
       systemInstruction: getSystemPrompt(),
-      maxOutputTokens: 8000,
+      maxOutputTokens: 20000,
     },
   });
 
@@ -47,7 +46,7 @@ export const POST = async (req: NextRequest) => {
         createdAt: new Date()
       }
     })
-
-    return NextResponse.json({ success: true, message: "Generated the content", llmResponse },{ status: 200 });
+    
+    return NextResponse.json({ success: true, message: "Generated the content", llmResponse: llmResponse.candidates[0].content.parts[0].text! },{ status: 200 });
   }
 };

@@ -1,4 +1,4 @@
-import { StepType, Status, Steps } from '../../types/steps';
+import { StepType, Status, Steps } from '../../types/stepsType';
 
 export function parser(prompt: string): Steps[] {
     // Initialize empty steps array

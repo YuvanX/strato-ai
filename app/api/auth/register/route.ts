@@ -1,5 +1,5 @@
 import prisma from "@/db/src/db";
-import { registerType } from "@/types/registertype";
+import { registerType } from "@/types/registerType";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 

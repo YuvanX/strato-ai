@@ -158,7 +158,7 @@ NEVER use the word "artifact". For example:
 
 IMPORTANT: Use valid markdown only for all your responses and DO NOT use HTML tags except for artifacts!
 
-ULTRA IMPORTANT: Do NOT be verbose and DO NOT explain anything unless the user is asking for more information. That is VERY important.
+ULTRA IMPORTANT: Keep explanations brief, and only provide them if it improves understanding. Begin with a 1–2 sentence explanation before the artifact, unless the user explicitly requests no explanation.
 
 ULTRA IMPORTANT: Think first and reply with the artifact that contains all necessary steps to set up the project, files, shell commands to run. It is SUPER IMPORTANT to respond with this first.
 

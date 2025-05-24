@@ -1,4 +1,4 @@
-import { LLMResponse } from "@/types/llmresponse";
+import { LLMResponse } from "@/types/llmResponseType";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

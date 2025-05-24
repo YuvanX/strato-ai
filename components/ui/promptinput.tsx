@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import clsx from "clsx";
 import { useStepStore } from "@/store/useStepStore";
-import { Steps } from "@/types/steps";
+import { Steps } from "@/types/stepsType";
 import { useLLMResponse } from "@/store/useLLMResponse";
 
 
@@ -51,6 +51,7 @@ export const PromptInput = ({
       redirect: false
     })
     const { llmResponse } = result.data
+    console.log(llmResponse);
     setLLM(llmResponse)
     router.push(`/chat/${projectId}`)
   }
@@ -109,7 +110,7 @@ export const PromptInput = ({
   return (
     <div
       className={clsx(
-        "border shadow-sm  dark:border-slate-600 bg-white text-black dark:bg-[#27272a] dark:text-white p-4 rounded-xl",
+        "border shadow-sm  dark:border-1 bg-white text-black dark:bg-card dark:text-white p-4 rounded-xl",
         className
       )}
     >
@@ -123,7 +124,7 @@ export const PromptInput = ({
       />
       <div className="flex justify-end">
         <Button
-          className="bg-gray-200 text-slate-400"
+         
           onClick={handleRequest}
         >
           <RiArrowRightLine />

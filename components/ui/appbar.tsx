@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { DropDown } from "./dropdown";
 import { RiTwitterXLine } from "react-icons/ri";
-import { ModeToogle } from "./modetoggle";
+import { ModeToogle } from "./mode-toggle";
 import { useEffect, useState } from "react";
 
 export const AppBar = () => {
