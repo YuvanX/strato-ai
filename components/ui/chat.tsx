@@ -7,17 +7,17 @@ import { useLLMResponse } from "@/store/useLLMResponse";
 import { parser } from "@/app/utils/parser";
 import { Steps } from "@/types/stepsType";
 import { useMemo } from "react";
-
+import { useStepStore } from "@/store/useStepStore";
 
 
 export const Chat = () => {
   const llmResponse = useLLMResponse((state) => state.llm)
   const message = useMemo(() => parsedLLMResponse(llmResponse), [llmResponse])
-  
+  const steps = useStepStore((state) => state.steps)
     return <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
         {/* <UserMessageCard message="Hi there"/> */}
-        <StratoMessageCard message={message}/>
+        <StratoMessageCard message={message} steps={steps}/>
       </div>
       <PromptInput className="z-50" rows={2} placeHolderPhrases={placeHolderPhrases} />
     </div>
@@ -52,7 +52,7 @@ export interface Message {
 }
 
 function findTitle(llmResponse: string) {
-  const match = llmResponse.match(/<stratoArtifact\s+[^>]*id="([^"]+)"/)
+  const match = llmResponse.match(/<stratoArtifact\s+[^>]*title="([^"]+)"/)
   return match ? match[1] : null
 }
 

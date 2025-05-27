@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { useStepStore } from "@/store/useStepStore";
 import { Steps } from "@/types/stepsType";
 import { useLLMResponse } from "@/store/useLLMResponse";
+import { parser } from "@/app/utils/parser";
 
 
 export const PromptInput = ({
@@ -29,7 +30,7 @@ export const PromptInput = ({
   const router = useRouter()
   const setSteps = useStepStore((state) => state.setState)
   const setLLM = useLLMResponse((state) => state.setLLM)
-
+  const addStep = useStepStore((state) => state.addStep)
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
     autoScale();
@@ -51,8 +52,9 @@ export const PromptInput = ({
       redirect: false
     })
     const { llmResponse } = result.data
-    console.log(llmResponse);
     setLLM(llmResponse)
+    const extraSteps = parser(llmResponse)
+    extraSteps.map((s) => addStep(s))
     router.push(`/chat/${projectId}`)
   }
 
@@ -118,7 +120,7 @@ export const PromptInput = ({
         ref={textAreaRef}
         value={input}
         placeholder={placeHolder}
-        className="w-full outline-none resize-none "
+        className="w-full outline-none resize-none bg-card"
         onChange={handleChange}
         rows={rows}
       />

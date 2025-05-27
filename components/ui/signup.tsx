@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,6 +18,7 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
   async function handleRequest() {
@@ -33,7 +34,17 @@ export const Signup = () => {
       console.log(error);
     }    
   }
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+  
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+   setPassword(e.target.value)
+  }
 
+  const handleUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value)
+  }
 
   return (
     <Card className="w-lg font-sans">
@@ -49,7 +60,7 @@ export const Signup = () => {
             Email
           </Label>
           <Input
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmail}
             type="email"
             placeholder="Email"
           />
@@ -59,7 +70,7 @@ export const Signup = () => {
             Password
           </Label>
           <Input
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePassword}
             type="password"
             placeholder="Password"
           />
@@ -69,7 +80,7 @@ export const Signup = () => {
             Username
           </Label>
           <Input
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleUserName}
             type="text"
             placeholder="Username"
           />
@@ -80,7 +91,7 @@ export const Signup = () => {
 
         <div className="flex justify-center">
           <span className="text-foreground text-sm">
-            Already have an account? <Link className="underline" href={"/signin"}>Login</Link>
+            Already have an account? <Link className="underline text-orange-500" href={"/signin"}>Login</Link>
           </span>
         </div>
       </CardContent>

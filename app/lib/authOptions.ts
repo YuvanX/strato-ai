@@ -23,7 +23,7 @@ export const authenticationOptions = {
 
                 const { email, password } = credentials;
                 const user = await prisma.user.findUnique({ where: email })
-                if(!user) return NextResponse.json({ success: false, message: "Create an account"})
+                if(!user) throw new Error("Create an account")
                 
                 if(user && user.password) {
                     const isValidPassword = bcrypt.compare(password, user.password)

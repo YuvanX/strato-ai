@@ -4,6 +4,7 @@ export type Steps = {
     content: string;
     type: StepType;
     status: Status;
+    filePath?: string;
 }
 
 export type StepStore = {

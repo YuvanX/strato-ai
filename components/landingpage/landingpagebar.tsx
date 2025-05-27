@@ -1,5 +1,5 @@
 "use client";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ModeToogle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { WebhookIcon } from "@/components/ui/webhook";
 export const LandingPageBar = () => {
   const [scroll, setScroll] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const router = useRouter()
   useEffect(() => {
     const handleScroll = () => {
       setScroll(window.scrollY > 10);
@@ -59,14 +59,14 @@ export const LandingPageBar = () => {
             <ModeToogle />
           </div>
           <Button
-            className="dark:text-white text-black bg-transparent"
-            onClick={() => redirect("/auth")}
+            className="shadow-none dark:text-white bg-transparent text-black hover:bg-transparent cursor-pointer"
+            onClick={() => router.push("/signin")}
           >
             Login
           </Button>
           <Button
-            className="text-white bg-black rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
-            onClick={() => redirect("/auth")}
+            className="text-white  rounded-r-full rounded-l-full px-4 border  shadow-md"
+            onClick={() => router.push("/signup")}
           >
             Signup
           </Button>
@@ -76,13 +76,13 @@ export const LandingPageBar = () => {
         <div className="z-20 fixed top-25 h-screen bg-white dark:bg-black w-full lg:hidden">
           <Button
             className="dark:text-white text-black"
-            onClick={() => redirect("/auth")}
+            onClick={() => router.push("/signin")}
           >
             Login
           </Button>
           <Button
             className="text-white bg-black rounded-r-full  rounded-l-full  border border-slate-600 shadow-md"
-            onClick={() => redirect("/auth")}
+            onClick={() => router.push("/signup")}
           >
             Signup
           </Button>

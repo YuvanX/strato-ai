@@ -26,7 +26,7 @@ export const DropDown = ({user}: any) => {
           <DropdownMenuItem onClick={() => redirect('/dashboard')}>DashBoard</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuSeparator/>
-          <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => signOut({callbackUrl: '/'})}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

@@ -1,24 +1,38 @@
 "use client";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import { GoArrowRight } from "react-icons/go";
 import * as m from "motion/react-client";
 
 export const HeroSection = () => {
   return (
     <div className="text-center pt-50 max-w-6xl">
-      <m.div initial={{opacity: 0, y: 30}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeIn"}} className="text-3xl md:text-6xl xl:text-8xl font-semibold">
-        Generate Your Landing Just with a Prompt
+      <m.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="text-3xl text-[#FF7900] dark:text-[#DE4300] md:text-6xl xl:text-8xl font-semibold"
+      >
+        Your Website, Built by AI. No Code. No Hassle.
       </m.div>
-        <m.div initial={{opacity: 0, y: 50}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeIn"}} className="max-w-2xl text-muted-foreground mx-auto text-sm md:text-lg my-5 leading-relaxed">
-          Everything AI seamlessly integrated all the modern AI generation tools
-          into one platform so that you can generate content with a single
-          click.
-        </m.div>
+      <m.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="max-w-2xl text-muted-foreground mx-auto text-sm md:text-lg my-5 leading-relaxed"
+      >
+        Generate professional websites by simply telling us what you want.
+        Perfect for startups, creators, and businesses looking to launch fast.
+      </m.div>
 
-      <m.div initial={{opacity: 0, y: 90}} animate={{opacity: 1, y: 0}} transition={{duration: 0.5, ease: "easeIn"}} className="flex gap-4 justify-center items-center">
+      <m.div
+        initial={{ opacity: 0, y: 90 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="flex gap-4 justify-center items-center"
+      >
         <Button
-          className="!w-30 text-white bg-gray-900  rounded-r-full rounded-l-full px-4 border border-slate-600 shadow-md"
+          className="!w-30 text-white   rounded-r-full rounded-l-full px-4 border shadow-md"
           onClick={() => redirect("/auth")}
         >
           Get Started
