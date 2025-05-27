@@ -32,8 +32,8 @@ export const HeroSection = () => {
         className="flex gap-4 justify-center items-center"
       >
         <Button
-          className="!w-30 text-white   rounded-r-full rounded-l-full px-4 border shadow-md"
-          onClick={() => redirect("/auth")}
+          className="!w-30 text-white   rounded-r-full rounded-l-full px-4 border shadow-md cursor-pointer"
+          onClick={() => redirect("/signup")}
         >
           Get Started
         </Button>

@@ -124,7 +124,7 @@ export const Signin = () => {
 
         <div className="relative">
           <Separator className="my-6" />
-          <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-sm text-gray-500">
+          <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-[#18181B] px-3 text-sm text-gray-500">
             Or continue with
           </span>
         </div>
@@ -132,7 +132,7 @@ export const Signin = () => {
           onClick={async () => {
             await signIn("google", { callbackUrl: "/generate" });
           }}
-          className="w-full my-2 bg-white text-black cursor-pointer border hover:bg-transparent"
+          className="w-full my-2 bg-white text-black cursor-pointer border hover:bg-gray-200"
         >
           <FcGoogle size={18} />
           <div>Continue with Google</div>

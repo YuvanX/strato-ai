@@ -9,6 +9,7 @@ import { useStepStore } from "@/store/useStepStore";
 import { Steps } from "@/types/stepsType";
 import { useLLMResponse } from "@/store/useLLMResponse";
 import { parser } from "@/app/utils/parser";
+import { useUserPrompt } from "@/store/useUserPrompt";
 
 
 export const PromptInput = ({
@@ -31,6 +32,7 @@ export const PromptInput = ({
   const setSteps = useStepStore((state) => state.setState)
   const setLLM = useLLMResponse((state) => state.setLLM)
   const addStep = useStepStore((state) => state.addStep)
+  const setUserPrompt = useUserPrompt((state) => state.setUserPrompt)
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
     autoScale();
@@ -38,10 +40,12 @@ export const PromptInput = ({
 
   async function init() {
 
+  
     const response = await axios.post('/api/template', {
       prompt: input,
       redirect: false
     })
+    setUserPrompt(input)
     
     const { prompts, steps, projectId } = response.data
     setSteps(steps)

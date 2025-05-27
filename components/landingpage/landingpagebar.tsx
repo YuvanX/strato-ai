@@ -65,7 +65,7 @@ export const LandingPageBar = () => {
             Login
           </Button>
           <Button
-            className="text-white  rounded-r-full rounded-l-full px-4 border  shadow-md"
+            className="text-white  rounded-r-full rounded-l-full px-4 border  shadow-md cursor-pointer"
             onClick={() => router.push("/signup")}
           >
             Signup
@@ -75,13 +75,13 @@ export const LandingPageBar = () => {
       {open && (
         <div className="z-20 fixed top-25 h-screen bg-white dark:bg-black w-full lg:hidden">
           <Button
-            className="dark:text-white text-black"
+            className="dark:text-white text-black cursor-pointer"
             onClick={() => router.push("/signin")}
           >
             Login
           </Button>
           <Button
-            className="text-white bg-black rounded-r-full  rounded-l-full  border border-slate-600 shadow-md"
+            className="text-white bg-black rounded-r-full  rounded-l-full  border border-slate-600 shadow-md cursor-pointer"
             onClick={() => router.push("/signup")}
           >
             Signup

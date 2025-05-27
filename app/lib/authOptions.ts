@@ -1,9 +1,7 @@
 import prisma from "@/db/src/db";
 import Credentials from "next-auth/providers/credentials";
-import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import Google from "next-auth/providers/google";
-
 
 export const authenticationOptions = {
     providers: [
@@ -22,11 +20,11 @@ export const authenticationOptions = {
                 if(!credentials) throw new Error("No credentials provided!")
 
                 const { email, password } = credentials;
-                const user = await prisma.user.findUnique({ where: email })
+                const user = await prisma.user.findUnique({ where: { email } })
                 if(!user) throw new Error("Create an account")
                 
                 if(user && user.password) {
-                    const isValidPassword = bcrypt.compare(password, user.password)
+                    const isValidPassword = await bcrypt.compare(password, user.password)
                     if(!isValidPassword) throw new Error("Incorrect password provided")
 
                     return {
@@ -82,7 +80,7 @@ export const authenticationOptions = {
             if(user) {
                 token.id = user.id
             }
-
+            
             return token;
         },
         async session({ session, token }: any) {

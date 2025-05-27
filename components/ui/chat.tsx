@@ -8,15 +8,18 @@ import { parser } from "@/app/utils/parser";
 import { Steps } from "@/types/stepsType";
 import { useMemo } from "react";
 import { useStepStore } from "@/store/useStepStore";
+import { useUserPrompt } from "@/store/useUserPrompt";
 
 
 export const Chat = () => {
   const llmResponse = useLLMResponse((state) => state.llm)
   const message = useMemo(() => parsedLLMResponse(llmResponse), [llmResponse])
   const steps = useStepStore((state) => state.steps)
+
+  const userPrompt = useUserPrompt((state) => state.userPrompt)
     return <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto">
-        {/* <UserMessageCard message="Hi there"/> */}
+        <UserMessageCard message={userPrompt}/>
         <StratoMessageCard message={message} steps={steps}/>
       </div>
       <PromptInput className="z-50" rows={2} placeHolderPhrases={placeHolderPhrases} />
