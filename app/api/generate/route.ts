@@ -14,11 +14,11 @@ import prisma from "@/db/src/db";
 export const POST = async (req: NextRequest) => {
   const session = await getServerSideSession();
   if (!session) {
-    return NextResponse.json({ success: false, message: "Unauthorized" },{ status: 400 });
+    return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 400 });
   }
 
   const { prompt, projectId } = await req.json();
-  
+
   const contents = prompt.map((p: PartListUnion) => createUserContent(p));
 
   const llmResponse: GenerateContentResponse = await ai.models.generateContent({
@@ -32,21 +32,34 @@ export const POST = async (req: NextRequest) => {
 
   if (!llmResponse) {
     return NextResponse.json({
-      sucess: false,
+      success: false,
       result: "No response from llm",
     });
-  
   } else {
+
+    const parsedSteps: Steps[] = parser(llmResponse.candidates[0].content.parts[0].text!);
     
-    const parsedSteps: Steps[] = parser(llmResponse.candidates[0].content.parts[0].text!)
-    await prisma.steps.create({
-      data: {
-        projectId: projectId,
-        steps: parsedSteps, 
-        createdAt: new Date()
-      }
-    })
-    
-    return NextResponse.json({ success: true, message: "Generated the content", llmResponse: llmResponse.candidates[0].content.parts[0].text! },{ status: 200 });
+    await prisma.$transaction(async (tx) => {
+      await tx.steps.create({
+        data: {
+          projectId: projectId,
+          steps: parsedSteps,
+          createdAt: new Date(),
+        },
+      });
+
+      await tx.chat.create({
+        data: {
+          projectId: projectId,
+          message: llmResponse.candidates[0].content.parts[0].text!,
+          role: "AI",
+          createdAt: new Date(),
+        },
+      });
+    });
+
+    return NextResponse.json({ success: true, message: "Generated the content", llmResponse: llmResponse.candidates[0].content.parts[0].text!},
+      { status: 200 }
+    );
   }
 };

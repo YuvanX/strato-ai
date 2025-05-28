@@ -46,6 +46,8 @@ function getLanguage(filename: string): string {
             return "css"
         case "json": 
             return "json"
+        case "html":
+            return "html"
         default:
             return "plaintext"
     }

@@ -1,18 +1,29 @@
 "use client";
-import { useStepStore } from "@/store/useStepStore";
 import { FileSystem, FolderNode } from "@/types/fileSystemType";
 import { Steps } from "@/types/stepsType";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { File, Folder, Tree } from "../magicui/file-tree";
 import { LuFiles } from "react-icons/lu";
 import { Separator } from "./separator";
+import { useChat } from "@/store/useChat";
+
+
 export const FileBuilder = ({
   setSelectedFile,
 }: {
   setSelectedFile: (fileDate: { name: string; content: string }) => void;
 }) => {
-  const steps = useStepStore((state) => state.steps);
-  const fileSystem = useMemo(() => buildFileSystem(steps), [steps]);
+
+
+  const chat = useChat((state) => state.chat);
+
+  const allSteps = useMemo(() => {
+    return chat
+      .filter((c) => c.role === "AI" && c.steps?.length)
+      .flatMap((c) => c.steps!);
+  }, [chat]);
+  
+  const fileSystem = useMemo(() => buildFileSystem(allSteps), [allSteps]);
 
   return (
     <div>
@@ -60,9 +71,8 @@ function buildFileSystem(steps: Steps[]): FileSystem {
 
 function renderFileTree(
   fs: FileSystem,
-  onFileClick: (fileData: { name: string, content: string }) => void
+  onFileClick: (fileData: { name: string; content: string }) => void
 ): React.ReactNode {
-
   return Object.entries(fs).map(([name, node]) => {
     if (node.type === "folder") {
       return (
@@ -76,7 +86,7 @@ function renderFileTree(
           className="my-1"
           key={name}
           value={name}
-          onClick={() => onFileClick({ name, content: node.content || ''})}
+          onClick={() => onFileClick({ name, content: node.content || "" })}
         >
           {name}
         </File>

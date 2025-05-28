@@ -71,8 +71,17 @@ async function handleStackCreation(stackPrompt: string, session: any, prompt: st
           createdAt: new Date(),
         },
       });
+      
+      await tx.chat.create({
+        data: {
+          projectId: project.id,
+          message: prompt,
+          role: 'USER',
+          createdAt: new Date()
+        }
+      })
+
       const parsedSteps: Steps[] = parser(stackPrompt);
-      console.log(parsedSteps);
       
       const steps = await tx.steps.create({
         data: {
@@ -81,6 +90,8 @@ async function handleStackCreation(stackPrompt: string, session: any, prompt: st
           createdAt: new Date()
         },
       });
+
+
       await tx.prompt.create({
         data: {
           projectId: project.id,

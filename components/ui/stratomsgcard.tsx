@@ -1,15 +1,30 @@
 import { Steps } from "@/types/stepsType";
-import { Message } from "./chat";
 import { FileSteps } from "./steps";
-import { WebhookIcon } from "./webhook";
 
-export const StratoMessageCard = ({ message, steps }: { message: Message, steps: Steps[] }) => {
+
+
+export const StratoMessageCard = ({ message, steps }: { message: string, steps: Steps[] }) => {
+  const parsedMessage = parsedLLMResponse(message)
+
   return (
-    <div className="text-sm font-sans">
-      <div>{message.initialText}</div>
-      {message.title && <div>{message.title}</div>}
-      <div>  <FileSteps steps={steps}/></div>
-      <div>{message.finalText}</div>
+    <div className="text-sm font-sans m-4">
+      <div>{parsedMessage.initailText}</div>
+      {steps && <FileSteps steps={steps}/>}
+      <div>{parsedMessage.finalText}</div>
     </div>
   );
 };
+
+function parsedLLMResponse(message: string) {
+  const msg = {
+    initailText: "",
+    finalText: ""
+  }
+  const index1 = message.indexOf('`')
+  msg.initailText = message.substring(0, index1)
+
+  const index2 = message.lastIndexOf('`')
+  msg.finalText = message.substring(index2 + 1, message.length)
+
+  return msg
+}

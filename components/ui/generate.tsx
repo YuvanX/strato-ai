@@ -1,6 +1,5 @@
 import { placeHolderPhrases } from "@/app/utils/constants";
 import { PromptInput } from "./promptinput";
-import axios from "axios";
 
 export const Generate = () => {
 

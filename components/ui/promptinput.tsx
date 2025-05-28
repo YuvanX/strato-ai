@@ -5,11 +5,9 @@ import { RiArrowRightLine } from "react-icons/ri";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
 import clsx from "clsx";
-import { useStepStore } from "@/store/useStepStore";
-import { Steps } from "@/types/stepsType";
-import { useLLMResponse } from "@/store/useLLMResponse";
+import { useChat } from "@/store/useChat";
 import { parser } from "@/app/utils/parser";
-import { useUserPrompt } from "@/store/useUserPrompt";
+
 
 
 export const PromptInput = ({
@@ -29,10 +27,10 @@ export const PromptInput = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const pathName = usePathname()
   const router = useRouter()
-  const setSteps = useStepStore((state) => state.setState)
-  const setLLM = useLLMResponse((state) => state.setLLM)
-  const addStep = useStepStore((state) => state.addStep)
-  const setUserPrompt = useUserPrompt((state) => state.setUserPrompt)
+
+  const addToChat = useChat((state) => state.addToChat)
+
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
     autoScale();
@@ -45,20 +43,22 @@ export const PromptInput = ({
       prompt: input,
       redirect: false
     })
-    setUserPrompt(input)
     
     const { prompts, steps, projectId } = response.data
-    setSteps(steps)
+    addToChat({ id: `msg-${Date.now()}` ,role: 'USER', message: input })
+    addToChat({id: `msg-${Date.now()}`, role: 'AI', message: "OK I will setup the initial Project", steps: steps})
 
+    
     const result = await axios.post('/api/generate', {
       prompt: prompts,
       projectId,
       redirect: false
     })
+
     const { llmResponse } = result.data
-    setLLM(llmResponse)
     const extraSteps = parser(llmResponse)
-    extraSteps.map((s) => addStep(s))
+    addToChat({ id: `msg-${Date.now()}`, role: 'AI', message: llmResponse, steps: extraSteps })
+   
     router.push(`/chat/${projectId}`)
   }
 

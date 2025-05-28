@@ -289,5 +289,4 @@ export const templatePrompt = `
     Identify the most likely frontend tech stack used based on the following project description.
     Only respond with a single lowercase word (e.g., react, next.js, vue, angular).
 
-    Project description:
-    `;
+    Project description:`;
